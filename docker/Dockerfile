@@ -65,11 +65,11 @@ COPY ./tmpl.conf /etc/odoo/
 
 RUN ["chmod", "+x", "./entrypoint.sh"]
 
-# Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
+# Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt for users addons
 RUN chown odoo /etc/odoo/odoo.conf \
     && mkdir -p /mnt/src-addons \
     && mkdir -p /mnt/vendor-addons/OCA \
-    && chown -R odoo /mnt/extra-addons
+    && chown -R odoo /mnt
 VOLUME ["/var/lib/odoo", "/mnt"]
 
 # Expose Odoo services
