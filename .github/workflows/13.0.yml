@@ -28,7 +28,7 @@ jobs:
           docker push $DOCKER_USER/erp-base:13.0-latest
       - name: docker cp erp base
         run: |
-          docker tag erp-base:13.0-latest $DOCKER_USER/erp-base:13.0-${{ steps.date.outputs.date }}
+          docker tag $DOCKER_USER/erp-base:13.0-latest $DOCKER_USER/erp-base:13.0-${{ steps.date.outputs.date }}
       - name: docker push erp base with date
         run: |
           docker push $DOCKER_USER/erp-base:13.0-${{ steps.date.outputs.date }}
