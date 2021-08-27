@@ -24,6 +24,10 @@ function check_config() {
     DB_ARGS+=("${value}")
 }
 
+for dir in /mnt/extra-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+for dir in /mnt/extra-addons/*/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+for dir in /mnt/extra-addons/vendor/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+
 envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
 
 check_config "db_host" "$DB_HOST"
