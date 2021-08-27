@@ -21,7 +21,8 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: docker build erp base
         run: |
-          docker build -f ./docker/Dockerfile -t $DOCKER_USER/erp-base:13.0-latest .
+          cd ./docker
+          docker build -f Dockerfile -t $DOCKER_USER/erp-base:13.0-latest .
       - name: docker push erp base latest
         run: |
           docker push $DOCKER_USER/erp-base:13.0-latest
