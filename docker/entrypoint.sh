@@ -31,6 +31,9 @@ check_config "db_port" "$DB_PORT"
 check_config "db_user" "$DB_USER"
 check_config "db_password" "$DB_PASSWORD"
 
+for dir in ls -d /mnt/extra-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+for dir in ls -d /mnt/extra-addons/vendor/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+
 case "$1" in
     -- | odoo)
         shift
