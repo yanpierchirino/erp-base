@@ -67,10 +67,10 @@ RUN ["chmod", "+x", "./entrypoint.sh"]
 
 # Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN chown odoo /etc/odoo/odoo.conf \
-    && mkdir -p /mnt/extra-addons \
-    && mkdir -p /mnt/extra-addons/vendor/OCA \
+    && mkdir -p /mnt/src-addons \
+    && mkdir -p /mnt/vendor-addons/OCA \
     && chown -R odoo /mnt/extra-addons
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+VOLUME ["/var/lib/odoo", "/mnt"]
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
@@ -83,7 +83,7 @@ RUN ["chmod", "+x", "/usr/local/bin/wait-for-psql.py"]
 
 # Default environments
 ENV ADMIN_PASSWD adminpwd
-ENV ADDONS_PATH /mnt/extra-addons
+ENV ADDONS_PATH /mnt
 ENV DATA_DIR /var/lib/odoo
 ENV DBFILTER .*
 ENV PROXY_MODE True
