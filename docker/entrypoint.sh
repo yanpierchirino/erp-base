@@ -24,9 +24,25 @@ function check_config() {
     DB_ARGS+=("${value}")
 }
 
-for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
-for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
-for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+DIR="/mnt/src-addons/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+DIR="/mnt/vendor-addons/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+DIR="/mnt/vendor-addons/OCA/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+DIR="/mnt/vendor-addons/odoo/ee/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/odoo/ee/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
 
 envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
 
