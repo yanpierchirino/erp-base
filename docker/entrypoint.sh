@@ -24,16 +24,35 @@ function check_config() {
     DB_ARGS+=("${value}")
 }
 
-for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
-for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
-for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+# READ ADDONS
+DIR="/mnt/src-addons/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
 
+DIR="/mnt/vendor-addons/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+DIR="/mnt/vendor-addons/OCA/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+DIR="/mnt/vendor-addons/odoo/ee/*"
+if [ -d "$DIR" ]; then
+    for dir in /mnt/vendor-addons/odoo/ee/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+fi
+
+# MAKE ODOO.CONF FILE
 envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
 compgen -A variable ERP_ | while read v; do
     var_name="$v";
     var=${var_name/ERP_/};
     echo "${var,,} = ${!v}" >> "$ODOO_RC"; done
 
+# SET DATABASE PARAMETERS
 check_config "db_host" "$DB_HOST"
 check_config "db_port" "$DB_PORT"
 check_config "db_user" "$DB_USER"
