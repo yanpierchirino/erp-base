@@ -29,12 +29,15 @@ for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; don
 for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 
 envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
+compgen -A variable ERP_ | while read v; do
+    var_name="$v";
+    var=${var_name/ERP_/};
+    echo "${var,,} = ${!v}" >> "$ODOO_RC"; done
 
 check_config "db_host" "$DB_HOST"
 check_config "db_port" "$DB_PORT"
 check_config "db_user" "$DB_USER"
 check_config "db_password" "$DB_PASSWORD"
-
 
 case "$1" in
     -- | odoo)
