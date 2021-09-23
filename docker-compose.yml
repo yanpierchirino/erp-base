@@ -17,6 +17,7 @@ services:
       - HOST=db
       - USER=odoo
       - PASSWORD=odoo
+      - ERP_ADMIN_PASSWD=adminpwd
     networks:
       - webapp
 

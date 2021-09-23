@@ -25,22 +25,22 @@ function check_config() {
 }
 
 # READ ADDONS
-DIR="/mnt/src-addons/*"
+DIR="/mnt/src-addons"
 if [ -d "$DIR" ]; then
     for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons/*"
+DIR="/mnt/vendor-addons"
 if [ -d "$DIR" ]; then
     for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons/OCA/*"
+DIR="/mnt/vendor-addons/OCA"
 if [ -d "$DIR" ]; then
     for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons/odoo/ee/*"
+DIR="/mnt/vendor-addons/odoo/ee"
 if [ -d "$DIR" ]; then
     for dir in /mnt/vendor-addons/odoo/ee/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
