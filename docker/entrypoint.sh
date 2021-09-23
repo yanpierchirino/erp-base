@@ -25,25 +25,22 @@ function check_config() {
 }
 
 # READ ADDONS
-DIR="/mnt/src-addons"
-if [ -d "$DIR" ]; then
-    for dir in /mnt/src-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+if [ -d "/mnt/src-addons" ]; then
+    for dir in /mnt/src-addons/*; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons"
-if [ -d "$DIR" ]; then
-    for dir in /mnt/vendor-addons/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+if [ -d "/mnt/vendor-addons" ]; then
+    for dir in /mnt/vendor-addons/*; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons/OCA"
-if [ -d "$DIR" ]; then
-    for dir in /mnt/vendor-addons/OCA/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+if [ -d "/mnt/vendor-addons/OCA" ]; then
+    for dir in /mnt/vendor-addons/OCA/*; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
 
-DIR="/mnt/vendor-addons/odoo/ee"
-if [ -d "$DIR" ]; then
-    for dir in /mnt/vendor-addons/odoo/ee/*/; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
+if [ -d "/mnt/vendor-addons/odoo/ee" ]; then
+    for dir in /mnt/vendor-addons/odoo/ee/*; do export ADDONS_PATH=$ADDONS_PATH",$dir"; done
 fi
+
 
 # MAKE ODOO.CONF FILE
 envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
