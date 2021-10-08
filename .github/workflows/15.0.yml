@@ -1,8 +1,8 @@
-name: CICD - ERP Base v14.0
+name: CICD - ERP Base v15.0
 
 on:
   push:
-    branches: [ 14.0 ]
+    branches: [ 15.0 ]
 
 jobs:
   build:
@@ -22,13 +22,13 @@ jobs:
       - name: docker build erp base
         run: |
           cd ./docker
-          docker build -f Dockerfile -t $DOCKER_USER/erp-base:14.0-latest .
+          docker build -f Dockerfile -t $DOCKER_USER/erp-base:15.0-latest .
       - name: docker push erp base latest
         run: |
-          docker push $DOCKER_USER/erp-base:14.0-latest
+          docker push $DOCKER_USER/erp-base:15.0-latest
       - name: docker cp erp base
         run: |
-          docker tag $DOCKER_USER/erp-base:14.0-latest $DOCKER_USER/erp-base:14.0-${{ steps.date.outputs.date }}
+          docker tag $DOCKER_USER/erp-base:15.0-latest $DOCKER_USER/erp-base:15.0-${{ steps.date.outputs.date }}
       - name: docker push erp base with date
         run: |
-          docker push $DOCKER_USER/erp-base:14.0-${{ steps.date.outputs.date }}
+          docker push $DOCKER_USER/erp-base:15.0-${{ steps.date.outputs.date }}
