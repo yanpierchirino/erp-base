@@ -42,7 +42,7 @@ if [ -d "/mnt/vendor-addons/odoo/ee/*" ]; then
 fi
 
 # MAKE ODOO.CONF FILE
-envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
+# envsubst < /etc/odoo/tmpl.conf > "$ODOO_RC"
 compgen -A variable ERP_ | while read v; do
     var_name="$v";
     var=${var_name/ERP_/};
