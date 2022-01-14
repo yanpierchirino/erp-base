@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim
 MAINTAINER Yan Chirino <support@yanchirino.com>
 
-# SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
