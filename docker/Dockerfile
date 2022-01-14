@@ -36,7 +36,9 @@ RUN apt-get update && \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update -y
+run apt-get install -y python3.7
 
 # install latest postgresql-client
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
