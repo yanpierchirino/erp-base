@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM python:3.7-bullseye
 MAINTAINER Yan Chirino <support@yanchirino.com>
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
@@ -35,10 +35,6 @@ RUN apt-get update && \
     && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
-
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update -y
-run apt-get install -y python3.7
 
 # install latest postgresql-client
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
