@@ -27,8 +27,6 @@ RUN apt-get update && \
         xdg-utils \
         libpangocairo-1.0-0 \
         libgeoip-dev \
-        memcached \
-        libmemcached-tools \
         ca-certificates \
         curl \
         dirmngr \
