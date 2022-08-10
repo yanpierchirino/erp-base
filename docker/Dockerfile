@@ -6,9 +6,29 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
 
+
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        apt-utils \
+        pkg-config \
+        build-essential \
+        libssl-dev \
+        libxmlsec1-dev \
+        libsasl2-dev \
+        libldap2-dev \
+        python3-dev \
+        swig \
+        wget \
+        gnupg \
+        software-properties-common \
+        dirmngr \
+        gnupg \
+        xdg-utils \
+        libpangocairo-1.0-0 \
+        libgeoip-dev \
+        memcached \
+        libmemcached-tools \
         ca-certificates \
         curl \
         dirmngr \
