@@ -23,12 +23,18 @@ jobs:
         run: |
           cd ./docker
           docker build -f Dockerfile -t $DOCKER_USER/erp-base:12.0-latest .
-      - name: docker push erp base latest
-        run: |
-          docker push $DOCKER_USER/erp-base:12.0-latest
       - name: docker cp erp base
         run: |
-          docker tag $DOCKER_USER/erp-base:12.0-latest $DOCKER_USER/erp-base:12.0-${{ steps.date.outputs.date }}
+          docker tag $DOCKER_USER/erp-base:12.0-latest $DOCKER_USER/erp-base:12.0-20210120
       - name: docker push erp base with date
         run: |
-          docker push $DOCKER_USER/erp-base:12.0-${{ steps.date.outputs.date }}
+          docker push $DOCKER_USER/erp-base:12.0-20210120
+      # - name: docker push erp base latest
+      #   run: |
+      #     docker push $DOCKER_USER/erp-base:12.0-latest
+      # - name: docker cp erp base
+      #   run: |
+      #     docker tag $DOCKER_USER/erp-base:12.0-latest $DOCKER_USER/erp-base:12.0-${{ steps.date.outputs.date }}
+      # - name: docker push erp base with date
+      #   run: |
+      #     docker push $DOCKER_USER/erp-base:12.0-${{ steps.date.outputs.date }}
