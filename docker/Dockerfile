@@ -6,8 +6,7 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 ENV LANG C.UTF-8
 
 # Install deps
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
             ca-certificates \
             curl \
             dirmngr \
@@ -16,6 +15,17 @@ RUN apt-get update \
             libssl-dev \
             node-less \
             npm \
+            libc6 \
+            libfreetype6 \
+            libjpeg62-turbo \
+            libpng16-16 \
+            libssl1.1 \
+            libstdc++6 \
+            libx11-6 \
+            libxcb1 \
+            libxext6 \
+            libxrender1 \
+            zlib1g \
             python3-num2words \
             python3-pip \
             python3-phonenumbers \
@@ -31,10 +41,7 @@ RUN apt-get update \
             xz-utils \
             gettext \
             net-tools \
-        && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
-        && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
-        && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
-        && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
+            wkhtmltopdf
 
 # install latest postgresql-client
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
@@ -54,8 +61,8 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/
 RUN npm install -g rtlcss
 
 # Install Odoo
-ENV ODOO_VERSION 12.0
-RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_12.0.20210120_all.deb \
+ENV ODOO_VERSION 11.0
+RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_11.0.latest_all.deb \
         && apt-get update \
         && apt-get -y install --no-install-recommends ./odoo.deb \
         && rm -rf /var/lib/apt/lists/* odoo.deb

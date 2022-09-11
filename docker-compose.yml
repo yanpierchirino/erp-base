@@ -1,35 +1,39 @@
-version: '3.1'
+version: '3.4'
 services:
   web:
     build: ./docker
-    image: erp-base:12.0-latest
+    image: erp-base:11.0-latest
     container_name: erp
     depends_on:
       - db
     ports:
       - "8069:8069"
       - "8072:8072"
-    volumes:
-      - web-data:/var/lib/odoo
+    # volumes:
+      # - web-data:/var/lib/odoo
       # - ./config:/etc/odoo
       # - ./addons:/mnt/extra-addons
     environment:
-      - HOST=db
-      - USER=odoo
-      - PASSWORD=odoo
+      - ERP_DB_HOST=db
+      - ERP_DB_PORT=5432
+      - ERP_DB_USER=odoo
+      - ERP_DB_PASSWORD=odoo
+      - ERP_ADMIN_PASSWD=super-secret-pass
     networks:
       - webapp
 
   db:
     image: postgres:13
     container_name: psql
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
-    volumes:
-      - db-data:/var/lib/postgresql/data/pgdata
+    # volumes:
+      # - db-data:/var/lib/postgresql/data/pgdata
     networks:
       - webapp
 
