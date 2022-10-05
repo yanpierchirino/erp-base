@@ -22,7 +22,7 @@ jobs:
       - name: docker build erp base
         run: |
           cd ./docker
-          docker build -f Dockerfile -t $DOCKER_USER/erp-base:16.0-latest --platform linux/amd64.
+          docker build -f Dockerfile -t $DOCKER_USER/erp-base:16.0-latest --platform linux/amd64 .
       - name: docker push erp base latest
         run: |
           docker push $DOCKER_USER/erp-base:16.0-latest
