@@ -1,8 +1,11 @@
-version: '3.1'
+version: '3'
 services:
-  web:
-    build: ./docker
-    image: erp-base:15.0-latest
+  erp:
+    build:
+      context: "./docker"
+      platforms:
+        - "linux/amd64"
+    image: erp-base:16.0-latest
     container_name: erp
     depends_on:
       - db

@@ -1,4 +1,4 @@
-FROM python:3.7-bullseye
+FROM debian:bullseye-slim
 MAINTAINER Yan Chirino <support@yanchirino.com>
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
@@ -8,25 +8,8 @@ ENV LANG C.UTF-8
 
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        apt-utils \
-        pkg-config \
-        build-essential \
-        libssl-dev \
-        libxmlsec1-dev \
-        libsasl2-dev \
-        libldap2-dev \
-        python3-dev \
-        swig \
-        wget \
-        gnupg \
-        software-properties-common \
-        dirmngr \
-        gnupg \
-        xdg-utils \
-        libpangocairo-1.0-0 \
-        libgeoip-dev \
+RUN apt-get clean && apt-get update && apt-get upgrade -y && apt-get install -y \
+        --no-install-recommends \
         ca-certificates \
         curl \
         dirmngr \
@@ -35,6 +18,7 @@ RUN apt-get update && \
         libssl-dev \
         node-less \
         npm \
+        gettext-base \
         python3-num2words \
         python3-pdfminer \
         python3-pip \
@@ -49,7 +33,6 @@ RUN apt-get update && \
         python3-xlrd \
         python3-xlwt \
         xz-utils \
-        gettext-base \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
     && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
@@ -73,11 +56,11 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /et
 RUN npm install -g rtlcss
 
 # Install Odoo
-ENV ODOO_VERSION 15.0
-RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.latest_all.deb \
-        && apt-get update \
-        && apt-get -y install --no-install-recommends ./odoo.deb \
-        && rm -rf /var/lib/apt/lists/* odoo.deb
+ENV ODOO_VERSION master
+RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_16.1alpha1.latest_all.deb \
+    && apt-get update \
+    && apt-get -y install --no-install-recommends ./odoo.deb \
+    && rm -rf /var/lib/apt/lists/* odoo.deb
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
