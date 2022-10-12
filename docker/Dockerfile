@@ -32,6 +32,7 @@ RUN apt-get clean && apt-get update && apt-get upgrade -y && apt-get install -y 
         python3-watchdog \
         python3-xlrd \
         python3-xlwt \
+        python3-pylibdmtx \
         xz-utils \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
     && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
@@ -56,11 +57,11 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /et
 RUN npm install -g rtlcss
 
 # Install Odoo
-ENV ODOO_VERSION master
-RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_16.1alpha1.latest_all.deb \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends ./odoo.deb \
-    && rm -rf /var/lib/apt/lists/* odoo.deb
+ENV ODOO_VERSION 16.0
+RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.latest_all.deb \
+        && apt-get update \
+        && apt-get -y install --no-install-recommends ./odoo.deb \
+        && rm -rf /var/lib/apt/lists/* odoo.deb
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
@@ -88,7 +89,7 @@ RUN ["chmod", "+x", "/usr/local/bin/wait-for-psql.py"]
 ENV ERP_ADDONS_PATH /mnt
 ENV ERP_DATA_DIR /var/lib/odoo
 ENV ERP_SERVER_WIDE_MODULES web,base
-ENV ERP_LONGPOLLING_PORT 8072
+ENV ERP_GEVENT_PORT 8072
 ENV ERP_LOG_HANDLER [':INFO']
 ENV ERP_CSV_INTERNAL_SEP ,
 ENV ERP_XMLRPC True
