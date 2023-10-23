@@ -98,6 +98,7 @@ ENV ERP_XMLRPCS True
 ENV ERP_XMLRPCS_PORT 8071
 
 # Set default user when running the container
+RUN usermod -aG sudo odoo
 USER odoo
 
 ENTRYPOINT ["/entrypoint.sh"]
