@@ -18,6 +18,7 @@ RUN apt-get clean && apt-get update && apt-get upgrade -y && apt-get install -y 
         libssl-dev \
         node-less \
         npm \
+        git \
         gettext-base \
         python3-num2words \
         python3-pdfminer \
