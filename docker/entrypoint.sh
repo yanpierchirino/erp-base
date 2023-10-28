@@ -26,7 +26,7 @@ fi
 if [ -d "$extra_addons_path" ]; then
     
     # Verifica si el archivo requirements.txt existe en el directorio
-    if [ -f "$directory/requirements.txt" ]; then
+    if [ -f "$extra_addons_path/requirements.txt" ]; then
 
         # Instala las dependencias utilizando pip
         pip install -r "$extra_addons_path/requirements.txt"
@@ -36,7 +36,7 @@ if [ -d "$extra_addons_path" ]; then
         echo "requirements.txt no existe en el directorio."
     fi
 else
-    echo "No hay extra addons: $directory"
+    echo "No hay extra addons: $extra_addons_path"
 fi
 
 # MAKE ODOO.CONF FILE
