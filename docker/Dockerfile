@@ -90,7 +90,7 @@ RUN echo "alias odoo='python3 /opt/odoo/odoo-bin'" >> ~/.bashrc
 # Dependencias de Python necesarias
 RUN python3 -m pip install pip==20.3.4
 RUN pip install --upgrade setuptools
-RUN pip install -r requirements.txt
+RUN pip install -r ${ODOO_SOURCE_DIR}/requirements.txt
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
