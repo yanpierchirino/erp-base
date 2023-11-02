@@ -104,6 +104,8 @@ RUN ["chmod", "+x", "./entrypoint.sh"]
 RUN chown odoo /etc/odoo/odoo.conf \
     && mkdir -p /mnt/src-addons \
     && mkdir -p /mnt/vendor-addons/OCA \
+    && mkdir -p /var/lib/odoo \
+    && chown -R odoo /var/lib/odoo \
     && chown -R odoo /mnt
 VOLUME ["/var/lib/odoo", "/mnt"]
 
