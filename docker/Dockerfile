@@ -6,6 +6,7 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 ENV LANG C.UTF-8
 ENV ODOO_VERSION 17.0
 ENV ODOO_SOURCE_DIR=/opt/odoo
+RUN useradd odoo
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get clean && apt-get update && apt-get upgrade -y && apt-get install -y \
