@@ -96,6 +96,7 @@ RUN pip install -r ${ODOO_SOURCE_DIR}/requirements.txt
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
 COPY ./tmpl.conf /etc/odoo/
+COPY ./tmpl.conf /etc/odoo/odoo.conf
 
 RUN ["chmod", "+x", "./entrypoint.sh"]
 
