@@ -5,7 +5,7 @@ services:
       context: "./docker"
       platforms:
         - "linux/amd64"
-    image: erp-base:16.0-latest
+    image: erp-base:17.0-latest
     container_name: erp
     depends_on:
       - db
@@ -14,8 +14,6 @@ services:
       - "8072:8072"
     volumes:
       - web-data:/var/lib/odoo
-      # - ./config:/etc/odoo
-      # - ./addons:/mnt/extra-addons
     environment:
       - ERP_DB_HOST=db
       - ERP_DB_PORT=5432
@@ -26,7 +24,7 @@ services:
       - webapp
 
   db:
-    image: postgres:13
+    image: postgres:15
     container_name: psql
     environment:
       - POSTGRES_DB=postgres
