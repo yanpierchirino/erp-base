@@ -5,6 +5,7 @@ services:
       context: "./docker"
       platforms:
         - "linux/amd64"
+    platform: "linux/amd64"
     image: erp-base:17.0-latest
     container_name: erp
     depends_on:
@@ -24,7 +25,7 @@ services:
       - webapp
 
   db:
-    image: postgres:15
+    image: postgres:15.0
     container_name: psql
     environment:
       - POSTGRES_DB=postgres

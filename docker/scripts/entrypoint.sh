@@ -2,24 +2,23 @@
 
 set -e
 
-# Directorio de extra addons
 extra_addons_path="/var/lib/odoo/extra_addons"
 
 # READ ADDONS
 if [ -d "/mnt/src-addons/*" ]; then
-    for dir in /mnt/src-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH",$dir"; done
+    for dir in /mnt/src-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
 fi
 
 if [ -d "/mnt/vendor-addons/*" ]; then
-    for dir in /mnt/vendor-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH",$dir"; done
+    for dir in /mnt/vendor-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
 fi
 
 if [ -d "/mnt/vendor-addons/OCA/*" ]; then
-    for dir in /mnt/vendor-addons/OCA/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH",$dir"; done
+    for dir in /mnt/vendor-addons/OCA/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
 fi
 
 if [ -d "/mnt/vendor-addons/odoo/ee/*" ]; then
-    for dir in /mnt/vendor-addons/odoo/ee/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH",$dir"; done
+    for dir in /mnt/vendor-addons/odoo/ee/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
 fi
 
 # Verifica si existe directorio extra addons e instala librerias requeridad si hubiere
@@ -45,7 +44,6 @@ compgen -A variable ERP_ | while read v; do
     var_name="$v";
     var=${var_name/ERP_/};
     echo "${var,,} = ${!v}" >> "$ODOO_RC"; done
-
 
 case "$1" in
     -- | odoo)

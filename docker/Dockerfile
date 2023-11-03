@@ -86,7 +86,6 @@ RUN npm install -g rtlcss
 
 # Instalar y configurar Odoo desde el repositorio de GitHub
 RUN git clone --depth 1 --branch ${ODOO_VERSION} https://github.com/odoo/odoo ${ODOO_SOURCE_DIR}
-RUN echo "alias odoo='python3 /opt/odoo/odoo-bin'" >> ~/.bashrc
 
 # Dependencias de Python necesarias
 RUN python3 -m pip install pip==20.3.4
@@ -94,11 +93,14 @@ RUN pip install --upgrade setuptools
 RUN pip install -r ${ODOO_SOURCE_DIR}/requirements.txt
 
 # Copy entrypoint script and Odoo configuration file
-COPY ./entrypoint.sh /
-COPY ./tmpl.conf /etc/odoo/
-COPY ./tmpl.conf /etc/odoo/odoo.conf
+COPY /scripts/entrypoint.sh /
+COPY /templates/tmpl.conf /etc/odoo/
+COPY /templates/tmpl.conf /etc/odoo/odoo.conf
 
-RUN ["chmod", "+x", "./entrypoint.sh"]
+RUN chmod +x ./entrypoint.sh \
+    && chown odoo ./entrypoint.sh \
+    && chown odoo /etc/odoo/tmpl.conf \
+    && chown odoo /etc/odoo/odoo.conf
 
 # Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt for users addons
 RUN chown odoo /etc/odoo/odoo.conf \
@@ -115,11 +117,14 @@ EXPOSE 8069 8071 8072
 # Set the default config file
 ENV ODOO_RC /etc/odoo/odoo.conf
 
-COPY ./wait-for-psql.py /usr/local/bin/wait-for-psql.py
-RUN ["chmod", "+x", "/usr/local/bin/wait-for-psql.py"]
+# SCRIPTS
+COPY /scripts/odoo_cmd.sh /usr/local/bin/odoo
+COPY /scripts/wait-for-psql.py /usr/local/bin/wait-for-psql.py
+RUN chmod +x /usr/local/bin/odoo && chmod +x /usr/local/bin/wait-for-psql.py
+RUN chown -R odoo /usr/local/bin/odoo && chown odoo /usr/local/bin/wait-for-psql.py
 
 # Default environments
-ENV ERP_ADDONS_PATH /mnt
+ENV ERP_ADDONS_PATH /opt/odoo/addons,/mnt
 ENV ERP_DATA_DIR /var/lib/odoo
 ENV ERP_SERVER_WIDE_MODULES web,base
 ENV ERP_GEVENT_PORT 8072
@@ -132,6 +137,7 @@ ENV ERP_XMLRPCS_PORT 8071
 
 # Set default user when running the container
 RUN usermod -aG sudo odoo
+
 USER odoo
 
 ENTRYPOINT ["/entrypoint.sh"]
