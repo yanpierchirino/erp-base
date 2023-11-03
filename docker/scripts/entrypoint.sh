@@ -31,7 +31,7 @@ fi
 
 # Verifica si existe directorio extra addons e instala librerias requeridad si hubiere
 if [ -d "$extra_addons_path" ]; then
-    
+    export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$extra_addons_path"
     # Verifica si el archivo requirements.txt existe en el directorio
     if [ -f "$extra_addons_path/requirements.txt" ]; then
 
