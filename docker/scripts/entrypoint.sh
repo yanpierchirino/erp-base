@@ -6,9 +6,11 @@ extra_addons_path="/var/lib/odoo/extra_addons"
 
 # READ ADDONS
 if [ -d "/mnt/src-addons" ]; then
-    for dir in /mnt/src-addons/*; do
-        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
-    done
+    if [ -n "$(ls -A /mnt/src-addons)" ]; then
+        for dir in /mnt/src-addons/*; do
+            export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,/mnt/src-addons"
+        done
+    fi
 fi
 
 if [ -d "/mnt/vendor-addons" ]; then
@@ -20,27 +22,32 @@ if [ -d "/mnt/vendor-addons" ]; then
 fi
 
 if [ -d "/mnt/vendor-addons/OCA" ]; then
-    for dir in /mnt/vendor-addons/OCA/*; do
-        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
-    done
+    if [ -n "$(ls -A /mnt/vendor-addons/OCA)" ]; then
+        for dir in /mnt/vendor-addons/OCA/*; do
+            export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
+        done
+    fi
 fi
 
 if [ -d "/mnt/vendor-addons/odoo/ee" ]; then
-    export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,/mnt/vendor-addons/odoo/ee"
+    if [ -n "$(ls -A /mnt/vendor-addons/odoo/ee)" ]; then
+        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,/mnt/vendor-addons/odoo/ee"
+    fi
 fi
 
 # Verifica si existe directorio extra addons e instala librerias requeridad si hubiere
 if [ -d "$extra_addons_path" ]; then
-    export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$extra_addons_path"
-    # Verifica si el archivo requirements.txt existe en el directorio
-    if [ -f "$extra_addons_path/requirements.txt" ]; then
+    if [ -n "$(ls -A $extra_addons_path)" ]; then
+        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$extra_addons_path"
+        if [ -f "$extra_addons_path/requirements.txt" ]; then
 
-        # Instala las dependencias utilizando pip
-        pip install -r "$extra_addons_path/requirements.txt"
-        
-        echo "Dependencias de extra addons instaladas correctamente."
-    else
-        echo "requirements.txt no existe en el directorio."
+            # Instala las dependencias utilizando pip
+            pip install -r "$extra_addons_path/requirements.txt"
+            
+            echo "Dependencias de extra addons instaladas correctamente."
+        else
+            echo "requirements.txt no existe en el directorio."
+        fi
     fi
 else
     echo "No hay extra addons: $extra_addons_path"
