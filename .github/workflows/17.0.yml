@@ -4,7 +4,7 @@ on:
   push:
     branches: [ 17.0 ]
   schedule:
-    - cron: '0 23 * * 0 */2' # 0 minutos, 23 horas (11:00 PM), cada dos semanas (0 domingo)
+    - cron: "0 23 * * 0" # 0 minutos, 23 horas (11:00 PM), cada dos semanas (0 domingo)
 
 jobs:
   build:
