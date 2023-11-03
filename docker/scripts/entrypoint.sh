@@ -5,20 +5,28 @@ set -e
 extra_addons_path="/var/lib/odoo/extra_addons"
 
 # READ ADDONS
-if [ -d "/mnt/src-addons/*" ]; then
-    for dir in /mnt/src-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
+if [ -d "/mnt/src-addons" ]; then
+    for dir in /mnt/src-addons/*; do
+        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
+    done
 fi
 
-if [ -d "/mnt/vendor-addons/*" ]; then
-    for dir in /mnt/vendor-addons/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
+if [ -d "/mnt/vendor-addons" ]; then
+    for dir in /mnt/vendor-addons/*; do
+        if [ "$dir" != "/mnt/vendor-addons/OCA" ] && [ "$dir" != "/mnt/vendor-addons/odoo" ]; then
+            export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
+        fi
+    done
 fi
 
-if [ -d "/mnt/vendor-addons/OCA/*" ]; then
-    for dir in /mnt/vendor-addons/OCA/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
+if [ -d "/mnt/vendor-addons/OCA" ]; then
+    for dir in /mnt/vendor-addons/OCA/*; do
+        export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,$dir"
+    done
 fi
 
-if [ -d "/mnt/vendor-addons/odoo/ee/*" ]; then
-    for dir in /mnt/vendor-addons/odoo/ee/*; do export ERP_ADDONS_PATH=$ERP_ADDONS_PATH; done
+if [ -d "/mnt/vendor-addons/odoo/ee" ]; then
+    export ERP_ADDONS_PATH="$ERP_ADDONS_PATH,/mnt/vendor-addons/odoo/ee"
 fi
 
 # Verifica si existe directorio extra addons e instala librerias requeridad si hubiere
